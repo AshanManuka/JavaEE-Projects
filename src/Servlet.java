@@ -1,3 +1,5 @@
+import model.Customer;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,6 +26,9 @@ public class Servlet extends HttpServlet {
         String salary = req.getParameter("cSalary");
 
         System.out.println(id+" "+" "+name+" "+address+" "+salary);
+
+        Customer customer = new Customer();
+
 
 //        PrintWriter writer = resp.getWriter();
 //
