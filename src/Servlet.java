@@ -11,39 +11,20 @@ public class Servlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("recived request");
-
- /*       String id = req.getParameter("id");
-        String name = req.getParameter("name");
-        String address = req.getParameter("address");
-        String salary = req.getParameter("salary");
-
-        System.out.println();
-
-        PrintWriter writer = resp.getWriter();
-
-        writer.write("<h1>Done Response</h1>");
-        writer.write("<table border = '2'> width =100%");
-        writer.write("<thead>");
-        writer.write("<tr><th> Id </th><th> Name </th><th> Address </th><th> Salary </th></tr>");
-        writer.write("</thead>");
-        writer.write("<tbody>");
-        writer.write("<tr><td>"+id+"</td><td>"+name+"</td><td>"+address+"</tr><tr>"+salary+"</td></tr>");
-        writer.write("</tbody>");
-        writer.write("</table>");*/
+        System.out.println("received request");
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("invoked doPost method");
 
-//        String id = req.getParameter("id");
-//        String name = req.getParameter("name");
-//        String address = req.getParameter("address");
-//        String salary = req.getParameter("salary");
-//
-//        System.out.println();
-//
+        String id = req.getParameter("cId");
+        String name = req.getParameter("cName");
+        String address = req.getParameter("cAddress");
+        String salary = req.getParameter("cSalary");
+
+        System.out.println(id+" "+" "+name+" "+address+" "+salary);
+
 //        PrintWriter writer = resp.getWriter();
 //
 //        writer.write("<h1>Done Response</h1>");
