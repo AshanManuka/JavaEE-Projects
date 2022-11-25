@@ -4,12 +4,12 @@ public class Customer{
     private String customerId;
     private String customerName;
     private String customerAddress;
-    private String customerSalary;
+    private double customerSalary;
 
     public Customer() {
     }
 
-    public Customer(String customerId, String customerName, String customerAddress, String customerSalary) {
+    public Customer(String customerId, String customerName, String customerAddress, double customerSalary) {
         this.customerId = customerId;
         this.customerName = customerName;
         this.customerAddress = customerAddress;
@@ -40,11 +40,11 @@ public class Customer{
         this.customerAddress = customerAddress;
     }
 
-    public String getCustomerSalary() {
+    public double getCustomerSalary() {
         return customerSalary;
     }
 
-    public void setCustomerSalary(String customerSalary) {
+    public void setCustomerSalary(double customerSalary) {
         this.customerSalary = customerSalary;
     }
 
