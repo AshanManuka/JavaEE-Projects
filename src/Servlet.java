@@ -37,28 +37,25 @@ public class Servlet extends HttpServlet {
         String sal = req.getParameter("cSalary");
         double salary = Double.parseDouble(sal);
 
-        System.out.println(id+" "+" "+name+" "+address+" "+salary);
-
         // Set to Object
-        Customer customer = new Customer(id,name,address,salary);
+        Customer customer = new Customer(id, name, address, salary);
         boolean done = addCustomer(customer);
 
-        if (done){
+        if (done) {
             writer.write("<h1>Your Data was Saved !!!</h1>");
+            resp.sendRedirect("indexTwo.jsp");
         }
 
         try {
             boolean loadData = loadAllCustomer();
-            if(loadData){
+            if (loadData) {
                 System.out.println("Can't load data to HTML table.. so I have to use jsp");
             }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
 
-
-
-
+    }
         /*try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/d4","root","1234");
@@ -75,16 +72,6 @@ public class Servlet extends HttpServlet {
             e.printStackTrace();
         }*/
 
-/*        writer.write("<h1>Done Response</h1>");
-        writer.write("<table border = '2' width = 100%>");
-        writer.write("<thead>");
-        writer.write("<tr><th> Id </th><th> Name </th><th> Address </th><th> Salary </th></tr>");
-        writer.write("</thead>");
-        writer.write("<tbody>");
-        writer.write("<tr><td>"+id+"</td><td>"+name+"</td><td>"+address+"</tr><tr>"+salary+"</td></tr>");
-        writer.write("</tbody>");
-        writer.write("</table>");*/
-    }
 
     public boolean addCustomer(Customer cus){
         try {
@@ -99,10 +86,9 @@ public class Servlet extends HttpServlet {
         return true;
     }
 
+
     public boolean loadAllCustomer() throws SQLException, ClassNotFoundException {
-
         ResultSet resultSet = crudUtil.execute("SELECT * FROM customer");
-
         while (resultSet.next()){
             tmp.add(
                     new Customer(

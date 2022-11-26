@@ -1,3 +1,8 @@
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="model.Customer" %>
+<%@ page import="java.sql.ResultSet" %>
+<%@ page import="util.crudUtil" %>
+<%@ page import="java.sql.SQLException" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -89,6 +94,32 @@
         <div class="col-1"></div>
     </section>
 
+    <%--<%%>--%>
+<%--scriplet--%>
+    <%
+        ArrayList<Customer> customerList = new ArrayList<>();
+
+
+            try {
+                ResultSet result = crudUtil.execute("SELECT * FROM customer");
+                while (result.next()){
+                customerList.add(
+                        new Customer(
+                                result.getString("cusId"),
+                                result.getString("cusName"),
+                                result.getString("cusAddress"),
+                                Double.parseDouble(result.getString("salary"))
+                          ));
+                        }
+                } catch (SQLException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+
+
+
+    %>
+
     <section class="row" id="sec-four">
         <div class="col-1"></div>
         <div class="col-10">
@@ -102,6 +133,19 @@
                 </tr>
                 </thead>
                 <tbody id="tblCustomer">
+                <%
+                    for (Customer customer: customerList) {
+                %>
+
+                <tr>
+                <td><%=customer.getCustomerId()%></td>
+                <td><%=customer.getCustomerName()%></td>
+                <td><%=customer.getCustomerAddress()%></td>
+                <td><%=customer.getCustomerSalary()%></td>
+                </tr>
+                <%
+                    }
+                %>
 
                 </tbody>
             </table>
