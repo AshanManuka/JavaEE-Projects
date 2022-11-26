@@ -50,7 +50,7 @@ public class Servlet extends HttpServlet {
         try {
             boolean loadData = loadAllCustomer();
             if(loadData){
-
+                System.out.println("Can't load data to HTML table.. so I have to use jsp");
             }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
