@@ -1,6 +1,3 @@
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
-import javafx.collections.ObservableList;
 import model.Customer;
 import util.crudUtil;
 
@@ -15,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import static javafx.collections.FXCollections.observableArrayList;
 
 @WebServlet(urlPatterns = "/Customer")
 public class Servlet extends HttpServlet {
@@ -43,7 +39,7 @@ public class Servlet extends HttpServlet {
 
         if (done) {
             writer.write("<h1>Your Data was Saved !!!</h1>");
-            resp.sendRedirect("indexTwo.jsp");
+            resp.sendRedirect("index.jsp");
         }
 
         try {
