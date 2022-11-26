@@ -33,15 +33,12 @@ public class Servlet extends HttpServlet {
 
         // Set to Object
         Customer customer = new Customer(id,name,address,salary);
+        boolean done = addCustomer(customer);
 
-        try {
-            if (crudUtil.execute("INSERT INTO customer VALUES(?,?,?,?)",customer.getCustomerId(),customer.getCustomerName(),customer.getCustomerAddress(),customer.getCustomerSalary())) {
-                System.out.println("data Saved !!!");
-                writer.write("<h1>Your Data was Saved !!!</h1>");
-            }
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+        if (done){
+            writer.write("<h1>Your Data was Saved !!!</h1>");
         }
+
 
         /*try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -68,6 +65,19 @@ public class Servlet extends HttpServlet {
         writer.write("<tr><td>"+id+"</td><td>"+name+"</td><td>"+address+"</tr><tr>"+salary+"</td></tr>");
         writer.write("</tbody>");
         writer.write("</table>");*/
+    }
+
+    public boolean addCustomer(Customer cus){
+        try {
+            if (crudUtil.execute("INSERT INTO customer VALUES(?,?,?,?)",cus.getCustomerId(),cus.getCustomerName(),cus.getCustomerAddress(),cus.getCustomerSalary())) {
+                System.out.println("data Saved !!!");
+                return true;
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
 }
