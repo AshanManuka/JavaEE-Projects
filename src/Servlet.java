@@ -1,3 +1,6 @@
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
+import javafx.collections.ObservableList;
 import model.Customer;
 import util.crudUtil;
 
@@ -12,8 +15,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import static javafx.collections.FXCollections.observableArrayList;
+
 @WebServlet(urlPatterns = "/Customer")
 public class Servlet extends HttpServlet {
+    ArrayList<Customer> tmp = new ArrayList<>();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -39,14 +45,18 @@ public class Servlet extends HttpServlet {
 
         if (done){
             writer.write("<h1>Your Data was Saved !!!</h1>");
-            try {
-                loadAllCustomer();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
         }
+
+        try {
+            boolean loadData = loadAllCustomer();
+            if(loadData){
+
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
 
 
         /*try {
@@ -89,19 +99,21 @@ public class Servlet extends HttpServlet {
         return true;
     }
 
-    public void loadAllCustomer() throws SQLException, ClassNotFoundException {
-      int n = 0;
-        ArrayList<Customer> tmp = new ArrayList<>();
+    public boolean loadAllCustomer() throws SQLException, ClassNotFoundException {
 
         ResultSet resultSet = crudUtil.execute("SELECT * FROM customer");
 
         while (resultSet.next()){
-
+            tmp.add(
+                    new Customer(
+                    resultSet.getString("cusId"),
+                    resultSet.getString("cusName"),
+                    resultSet.getString("cusAddress"),
+                    Double.parseDouble(resultSet.getString("salary"))
+                    )
+            );
         }
-
-
-
-
+        return true;
     }
 
 }
