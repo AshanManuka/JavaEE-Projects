@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 @WebServlet(urlPatterns = "/Customer")
 public class Servlet extends HttpServlet {
@@ -37,6 +39,13 @@ public class Servlet extends HttpServlet {
 
         if (done){
             writer.write("<h1>Your Data was Saved !!!</h1>");
+            try {
+                loadAllCustomer();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
 
 
@@ -78,6 +87,21 @@ public class Servlet extends HttpServlet {
             return false;
         }
         return true;
+    }
+
+    public void loadAllCustomer() throws SQLException, ClassNotFoundException {
+      int n = 0;
+        ArrayList<Customer> tmp = new ArrayList<>();
+
+        ResultSet resultSet = crudUtil.execute("SELECT * FROM customer");
+
+        while (resultSet.next()){
+
+        }
+
+
+
+
     }
 
 }
