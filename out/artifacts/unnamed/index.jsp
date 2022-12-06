@@ -14,7 +14,7 @@
     <meta name="owner" content="Ashan Manuka">
     <meta name="viewport" content="width=device-width initial-scale=1 user-scalable=no">
     <link rel="stylesheet" href="event/css/bootstrap.min.css">
-    <link rel="stylesheet" href="event/style/customer.css">
+    <link rel="stylesheet" href="style/customer.css">
 </head>
 <body>
 <main class="container-fluid">
@@ -42,7 +42,7 @@
     <section class="row" id="sec-two">
         <div class="col-1"></div>
         <div class="col-3">
-            <a href="#sec-four"><button id="all-search"><b>All Customers</b></button></a>
+            <a href="#sec-four"><button id="all-search" form="customer-form" formmethod="post" formaction="index.jsp"><b>All Customers</b></button></a>
         </div>
         <div class="col-5">
             <label for="txtSearch"></label>
@@ -62,7 +62,7 @@
         <div class="col-1"></div>
         <div class="col-7">
             <div class="form-group">
-                <form action="Customer" method="post">
+                <form action="Customer" method="post" id="customer-form">
                 <label for="cId" id="lblOne">Customer ID</label>
                 <input class="form-control" id="cId" name="cId" required type="text">
                 <span class="control-error" id="lblcusid"></span>
@@ -80,10 +80,10 @@
                 <span class="control-error" id="lblcussalary"></span>
 
                     <br>
-                    <div class="d-flex col-5" >
-                        <button id="Add" class="col-3" type="submit"><b>Add</b></button>
-                        <button id="update" class="col-3" formaction="model.Customer"><b>Update</b></button>
-                        <button id="delete" class="col-3" type="reset"><b>Delete</b></button>
+                    <div class="d-flex col-5">
+                        <button id="Add" class="col-3" formaction="Customer?option=save"><b>Add</b></button>
+                        <button id="update" class="col-3" formaction="Customer?option=update"><b>Update</b></button>
+                        <button id="delete" class="col-3" formaction="Customer?option=delete" ><b>Delete</b></button>
                     </div>
 
                 </form>
@@ -97,6 +97,9 @@
     <%--<%%>--%>
 <%--scriplet--%>
     <%
+
+
+
         ArrayList<Customer> customerList = new ArrayList<>();
 
 
@@ -123,7 +126,7 @@
     <section class="row" id="sec-four">
         <div class="col-1"></div>
         <div class="col-10">
-            <table class="table table-bordered table-hover">
+            <table class="table table-bordered table-hover" id="cus-tbl">
                 <thead class="bg-info text-black">
                 <tr>
                     <th>Customer ID</th>
@@ -154,6 +157,7 @@
     </section>
 
 </main>
-
+<script src="event/jQuery/jquery-3.6.1.min.js"></script>
+<script src="controller/CustomerController.js"></script>
 </body>
 </html>

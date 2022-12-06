@@ -24,8 +24,13 @@ public class Servlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("invoked doPost method");
         PrintWriter writer = resp.getWriter();
+
+        System.out.println("invoked doPost method");
+        String op = req.getParameter("option");
+
+
+
 
         String id = req.getParameter("cId");
         String name = req.getParameter("cName");
@@ -35,21 +40,25 @@ public class Servlet extends HttpServlet {
 
         // Set to Object
         Customer customer = new Customer(id, name, address, salary);
-        boolean done = addCustomer(customer);
 
-        if (done) {
-            writer.write("<h1>Your Data was Saved !!!</h1>");
-            resp.sendRedirect("index.jsp");
-        }
+       if(op.equals("save")){
+           addCustomer(customer);
+       }else if(op.equals("delete")){
+           deleteCustomer(id);
+        }else if(op.equals("update")){
+           System.out.println("call update function ");
+       }
 
-        try {
-            boolean loadData = loadAllCustomer();
-            if (loadData) {
-                System.out.println("Can't load data to HTML table.. so I have to use jsp");
-            }
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        System.out.println("option is : "+op);
+
+//        try {
+//            boolean loadData = loadAllCustomer();
+//            if (loadData) {
+//                System.out.println("Can't load data to HTML table.. so I have to use jsp");
+//            }
+//        } catch (SQLException | ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
 
     }
         /*try {
@@ -69,17 +78,14 @@ public class Servlet extends HttpServlet {
         }*/
 
 
-    public boolean addCustomer(Customer cus){
+    public void addCustomer(Customer cus){
         try {
             if (crudUtil.execute("INSERT INTO customer VALUES(?,?,?,?)",cus.getCustomerId(),cus.getCustomerName(),cus.getCustomerAddress(),cus.getCustomerSalary())) {
                 System.out.println("data Saved !!!");
-                return true;
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
-            return false;
         }
-        return true;
     }
 
 
@@ -96,6 +102,16 @@ public class Servlet extends HttpServlet {
             );
         }
         return true;
+    }
+
+    public void deleteCustomer(String cusId) {
+        try {
+           crudUtil.execute("DELETE FROM customer WHERE cusId = ?",cusId);
+           System.out.println("deleted Customer !!!");
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 }
