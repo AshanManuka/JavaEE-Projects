@@ -42,7 +42,7 @@
     <section class="row" id="sec-two">
         <div class="col-1"></div>
         <div class="col-3">
-            <a href="#sec-four"><button id="all-search" form="customer-form" formmethod="post" formaction="index.jsp"><b>All Customers</b></button></a>
+            <a href="#sec-four"><button id="all-search" form="customer-form" formmethod="post" formaction="Customer"><b>All Customers</b></button></a>
         </div>
         <div class="col-5">
             <label for="txtSearch"></label>
@@ -100,10 +100,10 @@
 
 
 
-        ArrayList<Customer> customerList = new ArrayList<>();
+        ArrayList<Customer> customerList = (ArrayList<Customer>) request.getAttribute("customers");
 
 
-            try {
+           /* try {
                 ResultSet result = crudUtil.execute("SELECT * FROM customer");
                 while (result.next()){
                 customerList.add(
@@ -116,7 +116,7 @@
                         }
                 } catch (SQLException | ClassNotFoundException e) {
                     e.printStackTrace();
-                }
+                }*/
 
 
 
@@ -137,6 +137,7 @@
                 </thead>
                 <tbody id="tblCustomer">
                 <%
+                    if (customerList != null){
                     for (Customer customer: customerList) {
                 %>
 
@@ -148,6 +149,7 @@
                 </tr>
                 <%
                     }
+                  }
                 %>
 
                 </tbody>

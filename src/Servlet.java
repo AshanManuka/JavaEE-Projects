@@ -16,10 +16,31 @@ import java.util.ArrayList;
 @WebServlet(urlPatterns = "/Customer")
 public class Servlet extends HttpServlet {
     ArrayList<Customer> tmp = new ArrayList<>();
+    ArrayList<Customer> customerList = new ArrayList<>();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("received request");
+
+        try {
+            ResultSet result = crudUtil.execute("SELECT * FROM customer");
+            while (result.next()){
+                customerList.add(
+                        new Customer(
+                                result.getString("cusId"),
+                                result.getString("cusName"),
+                                result.getString("cusAddress"),
+                                Double.parseDouble(result.getString("salary"))
+                        ));
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        req.setAttribute("customers",customerList);
+
+//        resp.sendRedirect("index.jsp");
+        req.getRequestDispatcher("index.jsp").forward(req,resp);
     }
 
     @Override
@@ -60,6 +81,7 @@ public class Servlet extends HttpServlet {
 //            e.printStackTrace();
 //        }
 
+        resp.sendRedirect("Customer");
     }
         /*try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -89,7 +111,7 @@ public class Servlet extends HttpServlet {
     }
 
 
-    public boolean loadAllCustomer() throws SQLException, ClassNotFoundException {
+    /*public boolean loadAllCustomer() throws SQLException, ClassNotFoundException {
         ResultSet resultSet = crudUtil.execute("SELECT * FROM customer");
         while (resultSet.next()){
             tmp.add(
@@ -102,17 +124,36 @@ public class Servlet extends HttpServlet {
             );
         }
         return true;
-    }
+    }*/
 
     public void deleteCustomer(String cusId) {
         try {
            crudUtil.execute("DELETE FROM customer WHERE cusId = ?",cusId);
            System.out.println("deleted Customer !!!");
 
+
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
+
+
+/*    public void loadAllCustomer(){
+        try {
+            ResultSet result = crudUtil.execute("SELECT * FROM customer");
+            while (result.next()){
+                customerList.add(
+                        new Customer(
+                                result.getString("cusId"),
+                                result.getString("cusName"),
+                                result.getString("cusAddress"),
+                                Double.parseDouble(result.getString("salary"))
+                        ));
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }*/
 
 }
 

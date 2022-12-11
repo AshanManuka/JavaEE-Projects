@@ -1,6 +1,12 @@
+alert("show alert");
+console.log("show log");
 
+/*
+Reload and refresh option in js
+window.location.reload();
+window.location.href("https://google.com");*/
 
-    $("#cus-tbl>tr").click(function(){
+   /* $("#cus-tbl>tr").click(function(){
 
         alert("came to the function");
         // let cusId = $("this").children(":eq(0)").text();
@@ -13,5 +19,5 @@
         // $("#cAddress").val(cusAddress);
         // $("#cSalary").val(cusSalary);
 
-    });
+    });*/
 
